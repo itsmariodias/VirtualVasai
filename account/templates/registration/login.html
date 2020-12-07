@@ -1,0 +1,28 @@
+{% extends "base_menu.html" %}
+
+{% block title %}
+Login Here
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="vue-tempalte">
+     <form method="post" class="form-group">
+     	<h3>Sign In</h3>
+		{% csrf_token %}
+		{{form|crispy}}
+		<p>Don't have an account? Create one <a href="/register">here</a></p>
+		<button type="submit" class="btn btn-dark btn-lg btn-block">Sign In</button>
+	        <div class="social-icons">
+                <ul>
+                    <li><a href="#"><i class="fa fa-google"></i></a></li>
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                </ul>
+            </div>	
+    </form>
+
+    <a href="{% url 'password_reset' %}">Forgot your password?</a>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base_menu.html' %}
+
+{% block title %}
+About - {{settings.APP_NAME}}
+{% endblock %}
+
+{% load static %}
+
+{% block header %}
+<header class="wt-header">
+	<h1 class="display-1" id="h1-title">About</h1>
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="row px-3">
+  	<h2>Vasai:</h2>
+  	<p>Vasai is a historical place and important city in Mumbai's western suburbs, located in Palghar district. It also forms a part of Vasai-Virar city in the state of Maharashtra in the Konkan division in India. Vasai was in the Thane district prior to 2014.<br><br>
+
+	The Portuguese built the Vasai Fort here to strengthen their naval superiority over the Arabian Sea. At the time Vasai was called Bassein. The fort was taken over by the Maratha Army in 1739, ending the Battle of Vasai.<br><br>
+
+	The British then took over the territory from the Maratha Empire in 1780 during the First Anglo-Maratha War.<br><br>
+
+	As a legacy of Portuguese colonialism, East Indian Catholics form a small minority of the population. </p>
+</div>
+    <!-- our cards -->
+<div class="row mt-3 px-3">
+	<h2>Creators:</h2>
+</div>
+<div class="row mt-1">
+	    <div class="col-md-4 text-center">
+	        <img src="{% static 'images/Mario.png' %}" height='200'  width='200' class="img-fluid">
+	        <h3 class="wt-name">Mario</h3>8599
+	    </div>
+	    <div class="col-md-4 text-center">
+	        <img src="{% static 'images/Hansie_1.png' %}" height='200'  width='200' class="img-fluid">
+	        <h3 class="wt-name">Hansie</h3>8588
+	      </div>
+	    <div class="col-md-4 text-center">
+	        <img src="{% static 'images/Nijo.png' %}" height='200'  width='200' class="img-fluid">
+	        <h3 class="wt-name">Nijo</h3>8624
+	    </div>
+</div>
+
+<div class="row mt-3 px-3">
+	<p>This website was created for our Web Technology and DBMS project. Site was built using Bootstrap 4 and Django 3. Database backend used is MySQL</p>
+</div>
+{% endblock %}

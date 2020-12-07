@@ -1,0 +1,36 @@
+{% extends "base_menu.html" %}
+
+{% block title %}
+Login - {{settings.APP_NAME}}
+{% endblock %}
+
+{% block content %}
+
+{% if form.errors %}
+  <p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+{% load crispy_forms_tags %}
+<h2>Login</h2>
+
+<form class="form-group" method="post" action="{% url 'login' %}">
+{% csrf_token %}
+{{ form|crispy }}
+<p>Don't have an account? Create one <a href="/register">here</a></p>
+<input type="submit" class="btn btn-primary" value="Login" />
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+<a href="{% url 'password_reset' %}">Forgot your password?</a>
+
+{% if settings.SOCIAL_AUTH_GITHUB_KEY %}
+<hr/>
+<a class="btn btn-info" role="button" href="{% url 'social:begin' 'github' %}?next={{ next }}">
+    <i class="fab fa-github" aria-hidden="true"></i>
+    Login with GitHub</a>
+{% endif %}
+
+<!-- ROOT_URLCONF {{ settings.ROOT_URLCONF }} -->
+
+{% endblock %}
+

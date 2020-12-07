@@ -1,0 +1,86 @@
+{% extends "base_bootstrap.html" %}
+{% block navbar %}
+{% load app_tags %}
+{% load static %}
+<header class='sticky-top'>
+    <nav class="navbar navbar-expand-lg navbar-light menu-bar">
+        <a class="navbar-brand" href="/">
+            <img src="{% static 'images/logo.png' %}" width="75" height="42" alt="{{ settings.APP_NAME }}" loading="lazy">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- https://stackoverflow.com/questions/22047251/django-dynamically-get-view-url-and-check-if-its-the-current-page -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              {% url 'places:all' as places %}
+              <li {% if request.get_full_path == places %}class="active"{% endif %}>
+                  <a class="nav-link" href="{% url 'places:all' %}">Explore</a>
+              </li>
+              {% url 'regions' as region %}
+              <li {% if request.get_full_path == region %}class="active"{% endif %}>
+                  <a class="nav-link" href="{% url 'regions' %}">Regions</a>
+              </li>
+              {% url 'about' as about %}
+              <li {% if request.get_full_path == about %}class="active"{% endif %}>
+                  <a class="nav-link" href="{% url 'about' %}">About</a>
+              </li>
+            </ul>
+
+            <ul class="navbar-nav navbar-right my-2 my-lg-0">
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle">
+                        {{user.username}}<b class="caret"></b>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'account:view_profile' %}">My Profile</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'logout' %}?next={{request.path}}">Logout</a>
+                    </div>
+                </li>
+                {% else %}
+                <li class="nav-item my-2 my-lg-0 mr-sm-2">
+                    <a href="{% url 'login' %}?next={{request.path}}"><button class="btn btn-outline-primary">Login</button></a>
+                </li>
+                <li class="nav-item my-2 my-lg-0">
+                    <a href="{% url 'account:register' %}?next={{request.path}}"><button class="btn btn-outline-success">Create Account</button></a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+</header>
+
+{% endblock %}
+
+{% block footer %}
+    <footer class="panel-footer">
+        <div class="container">
+            <div class="row">
+
+                <!-- Qiuck links -->
+                <section id="hours" class="col-12 col-md-4">
+                    <span>Quick Links:</span><br>
+                    <a href="{% url 'places:all' %}">Explore</a><br>
+                    <a href="{% url 'regions' %}">Regions</a><br>
+                    <a href="{% url 'about' %}">About</a>
+                </section>
+
+                <!-- Address -->
+                <section id="address" class="col-12 col-md-4">
+                    <span>Address:</span><br>
+                    Vasai (W),<br>
+                    Maharashtra, India
+                </section>
+
+                <!-- Testimonial -->
+                <section id="testimonials" class="col-12 col-md-4">
+                    <p>"One of the Best places to visit in Maharashtra if you want to visit tons of Diversity within an area!"</p>
+                    <p>"Amazing Tourist Sites. Greenery everywhere and many Sea shores to visit... I'll be back again and again!!!"</p>
+                </section>
+            </div>
+        </div>
+    </footer>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base_menu.html" %}
+{% load static %}
+{% block title %}Edit Review - {{settings.APP_NAME}}{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'places/stars.css' %}">
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h2>Edit Review for {{ place.title }}</h2>
+<div>
+	            <form class="form-group" action="{% url 'places:editcomment' place.slug %}" method="post">
+	            {% csrf_token %}
+	                <div class="form-group">
+	                    <input name="subject" class="input form-control" type="text" value="{{ review.subject }}" />
+	                </div>
+	                <div class="form-group">
+	                    <textarea name="comment" class="input form-control">{{ review.comment }}</textarea>
+	                </div>
+	                <div class="form-group">
+	                    <div class="input-rating">
+	                        <strong class="text-uppercase">Your Rating:</strong>
+	                        <span class="stars">
+	                            <input type="radio" id="star5" name="rate" value="5" {% if review.rate == 5 %}checked{% endif %} required/>
+	                            <label for="star5">5</label>
+	                            <input type="radio" id="star4" name="rate" value="4" {% if review.rate == 4 %}checked{% endif %} required/>
+	                            <label for="star4">4</label>
+	                            <input type="radio" id="star3" name="rate" value="3" {% if review.rate == 3 %}checked{% endif %} required/>
+	                            <label for="star3">3</label>
+	                            <input type="radio" id="star2" name="rate" value="2" {% if review.rate == 2 %}checked{% endif %} required/>
+	                            <label for="star2">2</label>
+	                            <input type="radio" id="star1" name="rate" value="1" {% if review.rate == 1 %}checked{% endif %} required/>
+	                            <label for="star1">1</label>
+	                        </span>
+	                    </div>
+	                </div>
+	                    <button class="btn btn-primary">Edit Review</button>
+	            </form>
+</div>
+<a href="{% url 'places:place_detail' place.slug %}">Go Back</a>
+{% endblock %}

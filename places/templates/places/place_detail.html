@@ -1,0 +1,255 @@
+{% extends "base_menu.html" %}
+{% block title %} {{ place.title }} - {{settings.APP_NAME}} {% endblock %}
+
+{% load static %}
+{% block head %}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+	<link rel="stylesheet" href="{% static 'places/stars.css' %}">
+
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-8">
+			{% if images %}
+			<div id="gallery" class="carousel slide" data-ride="carousel">
+				<!-- Indicators -->
+				<ul class="carousel-indicators">
+					{% for image in images %}
+						{% if forloop.counter0 == 0 %}
+						<li data-target="#gallery" data-slide-to="0" class="active"></li>
+						{% else %}
+						<li data-target="#gallery" data-slide-to="{{ forloop.counter0 }}"></li>
+						{% endif %}
+					{% endfor %}
+				</ul>
+
+				<!-- The slideshow -->
+				<div class="carousel-inner p-0">
+					{% for image in images %}
+						{% if forloop.counter0 == 0 %}
+						<div class="carousel-item active wt-carousel-dimensions">
+							<img src="{{ image.images.url }}" class="d-block">
+						</div>
+						{% else %}
+						<div class="carousel-item wt-carousel-dimensions">
+							<img src="{{ image.images.url }}" class="d-block">
+						</div>
+						{% endif %}
+					{% endfor %}
+				</div>
+
+				<!-- Left and right controls -->
+				<a class="carousel-control-prev" href="#gallery" data-slide="prev">
+					<span class="carousel-control-prev-icon"></span>
+				</a>
+				<a class="carousel-control-next" href="#gallery" data-slide="next">
+					<span class="carousel-control-next-icon"></span>
+				</a>
+			</div>
+			{% endif %}
+		</div>
+		<div class="col-md-4 pt-1 pt-md-5">
+			<h1>{{ place.title }}</h1>
+			<h5>{{ place.region }}</h5>
+			<h6>{{ place.category }}</h6>
+			<div>
+				<div class="place-rating">
+						{% if place.averagereview <= 0  %}
+						<span class="far fa-star wt-star"></span>
+						{% elif place.averagereview <= 0.5  %}
+						<span class="fas fa-star-half-alt wt-star"></span>
+						{% else %}
+						<span class="fas fa-star wt-star"></span>
+						{% endif %}
+
+						{% if place.averagereview <= 1  %}
+						<span class="far fa-star wt-star"></span>
+						{% elif place.averagereview <= 1.5  %}
+						<span class="fas fa-star-half-alt wt-star"></span>
+						{% else %}
+						<span class="fas fa-star wt-star"></span>
+						{% endif %}
+
+						{% if place.averagereview <= 2  %}
+						<span class="far fa-star wt-star"></span>
+						{% elif place.averagereview <= 2.5  %}
+						<span class="fas fa-star-half-alt wt-star"></span>
+						{% else %}
+						<span class="fas fa-star wt-star"></span>
+						{% endif %}
+
+						{% if place.averagereview <= 3  %}
+						<span class="far fa-star wt-star"></span>
+						{% elif place.averagereview <= 3.5  %}
+						<span class="fas fa-star-half-alt wt-star"></span>
+						{% else %}
+						<span class="fas fa-star wt-star"></span>
+						{% endif %}
+
+						{% if place.averagereview <= 4  %}
+						<span class="far fa-star wt-star"></span>
+						{% elif place.averagereview <= 4.5  %}
+						<span class="fas fa-star-half-alt wt-star"></span>
+						{% else %}
+						<span class="fas fa-star wt-star"></span>
+						{% endif %}
+						{{ place.averagereview |stringformat:".1f"}} stars
+				</div>
+                <a href="#reviews"> {{ place.countreview }}  Review(s) / Add Review</a>
+            </div>
+            <hr>
+            <div>
+            	<b>Address:</b>
+            	<p>{{ place.address }}</p>
+            </div>
+		</div>
+	</div>
+	<hr>
+	{% ifequal place.streetview 'True' %}
+	<div class="row mt-3">
+		<div class="col-12">
+			<iframe
+			  width="100%"
+			  height="600px"
+			  frameborder="0" style="border:0"
+			  	src="https://www.google.com/maps/embed/v1/streetview?key={{ settings.GOOGLE_MAPS_API_KEY }}&location={{ place.latitude }},{{ place.longitude }}" allowfullscreen>
+			</iframe>
+		</div>
+	</div>
+	<hr>
+	{% endifequal %}
+	<div class="row">
+		<div class="col-12 twoColumns">
+			<p>{{ place.description }}</p>
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-md-6">
+			<iframe
+			  width="100%"
+			  height="400px"
+			  frameborder="0" style="border:0"
+			  {% if place.map_place_id %}
+			  	src="https://www.google.com/maps/embed/v1/place?key={{ settings.GOOGLE_MAPS_API_KEY }}&q=place_id:{{ place.map_place_id }}" allowfullscreen>
+			  {% else %}
+			  	src="https://www.google.com/maps/embed/v1/search?key={{ settings.GOOGLE_MAPS_API_KEY }}&q={{ place.latitude }},{{ place.longitude }}" allowfullscreen>
+			  {% endif %}
+			</iframe>
+		</div>
+		<div class="col-md-6 mt-3">
+        	{% load crispy_forms_tags %}
+        	{% if review %}
+        		{% for review in review %}
+	        	<h4>Your Review</h4>
+	        	{% if messages %}
+	               	{% for message in messages %}
+	                    <div class="alert alert-{{message.tags}}" role="alert">
+	                        {{ message }}
+	                    </div>
+	                {% endfor %}
+	            {% endif %}
+	        	<i class="far fa-clock"></i> {{ review.update_at.date }}
+	            <div class="review-rating">
+					{% if review.rate <= 0  %}
+					<span class="far fa-star wt-star"></span>
+					{% elif review.rate <= 0.5  %}
+					<span class="fas fa-star-half-alt wt-star"></span>
+					{% else %}
+					<span class="fas fa-star wt-star"></span>
+					{% endif %}
+					{% if review.rate <= 1  %}
+					<span class="far fa-star wt-star"></span>
+					{% elif review.rate <= 1.5  %}
+					<span class="fas fa-star-half-alt wt-star"></span>
+					{% else %}
+					<span class="fas fa-star wt-star"></span>
+					{% endif %}
+					{% if review.rate <= 2  %}
+					<span class="far fa-star wt-star"></span>
+					{% elif review.rate <= 2.5  %}
+					<span class="fas fa-star-half-alt wt-star"></span>
+					{% else %}
+					<span class="fas fa-star wt-star"></span>
+					{% endif %}
+					{% if review.rate <= 3  %}
+					<span class="far fa-star wt-star"></span>
+					{% elif review.rate <= 3.5  %}
+					<span class="fas fa-star-half-alt wt-star"></span>
+					{% else %}
+					<span class="fas fa-star wt-star"></span>
+					{% endif %}
+					{% if review.rate <= 4  %}
+					<span class="far fa-star wt-star"></span>
+					{% elif review.rate <= 4.5  %}
+					<span class="fas fa-star-half-alt wt-star"></span>
+					{% else %}
+					<span class="fas fa-star wt-star"></span>
+					{% endif %}
+					<b class="pl-2">{{ review.subject }}</b>
+				</div>
+	            <p>{{ review.comment }}</p>
+	            <a href="{% url 'places:editcomment' place.slug %}" class="btn btn-primary">Edit Review</a>
+	            {% endfor %}
+        	{% else %}
+	            <h4>Write Your Review</h4>
+	            {% if messages %}
+	                {% for message in messages %}
+	                    <div class="alert alert-{{message.tags}}" role="alert">
+	                        {{ message }}
+	                    </div>
+	                {% endfor %}
+	            {% endif %}
+	            <form class="form-group" action="{% url 'places:addcomment' place.slug %}" method="post">
+	            {% csrf_token %}
+	                <div class="form-group">
+	                    <input name="subject" class="input form-control" type="text" placeholder="Your subject" />
+	                </div>
+	                <div class="form-group">
+	                    <textarea name="comment" class="input form-control" placeholder="Your review"></textarea>
+	                </div>
+	                <div class="form-group">
+	                    <div class="input-rating">
+	                        <strong class="text-uppercase">Your Rating:</strong>
+	                        <span class="stars">
+	                            <input type="radio" id="star5" name="rate" value="5" required/>
+	                            <label for="star5">5</label>
+	                            <input type="radio" id="star4" name="rate" value="4" required/>
+	                            <label for="star4">4</label>
+	                            <input type="radio" id="star3" name="rate" value="3" required/>
+	                            <label for="star3">3</label>
+	                            <input type="radio" id="star2" name="rate" value="2" required/>
+	                            <label for="star2">2</label>
+	                            <input type="radio" id="star1" name="rate" value="1" required/>
+	                            <label for="star1">1</label>
+	                        </span>
+	                    </div>
+	                </div>
+	                {% if user.is_authenticated %}
+	                    <button class="btn btn-success">Submit</button>
+	                {% else %}
+	                    You must be logged in to post a review
+	                {% endif %}
+	            </form>
+            {% endif %}
+        </div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-md-12">
+	            <h4 id='reviews'>Reviews ({{ place.countreview }})</h4>
+	            <div class="row">
+	                <div class="col-md-12">
+	                    <div class="place-reviews">
+	                    	{% include 'places/comments.html' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

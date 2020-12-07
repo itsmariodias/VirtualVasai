@@ -1,0 +1,25 @@
+{% extends 'base_menu.html' %}
+{% block title %} My Profile - {{settings.APP_NAME}} {% endblock %}
+
+{% block content %}
+{% load static %}
+<h1>Your Profile</h1>
+<div>
+	<label>Name:</label>
+	<p>{{ user.first_name }} {{ user.last_name }}</p>
+	<label>Username:</label>
+	<p>{{ user.username }}</p>
+	<label>Email address:</label>
+	{% if user.email %}
+		<p>{{ user.email }}</p>
+	{% else %}
+		<p>None</p>
+	{% endif %}
+</div>
+<div>
+	{% if user.has_usable_password %}
+	<a href="{% url 'account:edit_profile' %}">Edit Profile</a><br>
+	{% endif %}
+    <a href="{% url 'logout' %}">Logout</a><br>
+</div>
+{% endblock %}

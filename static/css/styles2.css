@@ -1,0 +1,214 @@
+@media (min-width: 768px) {
+  #filterbutton {
+    display: none;
+  }
+  #collapseFilter {
+    display: block;
+  }
+    .carousel {
+    height: 500px;
+    overflow: hidden;
+  }
+  .carousel-item > img {
+    width: 100%;
+    min-height: 500px;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 768px) {
+  #collapseFilter {
+    border-right: none !important;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+  }
+
+    .carousel {
+    height: 300px;
+    overflow: hidden;
+  }
+
+  .carousel-item > img {
+    width: 100%;
+    min-height: 300px;
+    overflow: hidden;
+  }
+}
+
+
+.border-gray {
+  border-color: rgba(0,0,0,.1) !important;
+}
+
+body > .container {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+#hours > a {
+  color: white;
+}
+
+#hours > a:hover {
+  text-decoration: none;
+}
+
+.navbar-brand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Used to give star the orange colour */
+.wt-star
+{
+	color: orange;
+}
+
+/* to outstand when hovered over the mainblock */
+.wt-mainblock
+{
+  text-decoration: none;
+  color: black;
+}
+.wt-mainblock:hover
+{
+  text-decoration: none;
+  color: black;
+}
+
+.wt-name-link {
+  text-decoration: none;
+  color: black;
+}
+
+.wt-name-link:hover
+{
+  text-decoration: none;
+}
+
+.wt-review-link {
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .twoColumns{
+      -webkit-column-gap: 20px;
+         -moz-column-gap: 20px;
+              column-gap: 20px;
+      -webkit-column-count: 2;
+         -moz-column-count: 2;
+              column-count: 2;
+  }
+}
+
+
+/*increses size of star (to rate)*/
+.wt-big-star span
+{
+	font-size: 30px;
+}
+.wt-details
+{
+  padding: 50px;
+  display: block;
+}
+
+.wt-header
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+	text-align: center;
+	background: url("../images/explore-tile.jpg") rgba(0, 0, 0, 0.7);;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+  background-blend-mode: multiply;
+  min-height: 150px;
+}
+
+.menu-bar {
+  background-color: aquamarine;
+  -webkit-box-shadow: 0 0px 10px -2px black;
+  -moz-box-shadow: 0 0px 10px -2px black;
+  box-shadow: 0 0px 10px -2px black;
+}
+
+#h1-title
+{
+	font-weight: bold;
+	color: white;
+}
+
+.wt-lhs
+{
+	text-align: center;
+	background-color: aquamarine;
+	color: black;
+}
+
+
+.loc-head
+{
+	background-color: cyan; 
+	color: black; 
+	padding: 15px; 
+	border-radius: 50px; 
+	margin-top: 20px; 
+	margin-bottom: 20px;
+}
+
+/*===================================================================*/
+
+  .panel-footer section {
+    margin-bottom: 30px;
+    text-align: left;
+  }
+  .panel-footer section:nth-child(3) {
+    margin-bottom: 0; /* margin already exists on the whole row */
+  }
+  .panel-footer section hr {
+    width: 50%;
+  }
+  /* End Footer */
+
+
+
+.panel-footer {
+  margin-top: 30px;
+  padding-top: 35px;
+  padding-bottom: 30px;
+  background-color: #222;
+  border-top: 0;
+  color: white;
+}
+.panel-footer div.row {
+  margin-bottom: 35px;
+}
+#hours, #address {
+  line-height: 2;
+}
+#hours > span, #address > span {
+  font-size: 1.3em;
+}
+#hours{
+  color: aquamarine;
+}
+#hours > a:hover{
+  color: cyan;
+  cursor: pointer;
+}
+#address span{
+  color: aquamarine;
+}
+
+#address p {
+  font-size: .8em;
+  line-height: 1.8;
+}
+#testimonials {
+  font-style: italic;
+}
+#testimonials p:nth-child(2) {
+  margin-top: 25px;
+}

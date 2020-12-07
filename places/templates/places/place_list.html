@@ -1,0 +1,199 @@
+{% extends "base_menu.html" %}
+{% block title %} Places - {{settings.APP_NAME}} {% endblock %}
+
+{% block header %}
+<header class="wt-header">
+	<h1 class="display-1" id="h1-title">Explore</h1>
+</header>
+{% endblock %}
+
+{% load static %}
+{% block content %}
+<form>
+<div class="row mt-3">
+	<!-- lhs section -->
+	<a id="filterbutton" class="btn btn-info mx-auto my-3" data-toggle="collapse" href="#collapseFilter" role="button" aria-expanded="false" aria-controls="collapseFilter">Filter options</a>
+	<div class="col-md-3 p-3 border-right border-gray collapse" id="collapseFilter">
+		<h2>Filter</h2>
+		<label>Region:</label>
+		{% for region in region_list %}
+		<div class="form-check">
+		  <input class="form-check-input" type="checkbox" id="{{ region.name }}" name="searchByRegion"
+		  value="{{ region.name }}" {% if region.name in searchByRegion %}checked{% endif %}>
+		  <label class="form-check-label" for="{{ region.name }}">
+		    {{ region.name }}
+		  </label>
+		</div>
+		{% endfor %}
+		<hr>
+		<label>Category:</label>
+		{% for category in category_list %}
+		<div class="form-check">
+		  <input class="form-check-input" type="checkbox" id="{{ category.name }}"  name="searchByCategory"
+		  value="{{ category.name }}" {% if category.name in searchByCategory %}checked{% endif %}>
+		  <label class="form-check-label" for="{{ category.name }}">
+		    {{ category.name }}
+		  </label>
+		</div>
+		{% endfor %}
+		<hr>
+		<label>Rating:</label>
+		<div class="form-check">
+		  <input class="form-check-input" type="radio" value="4" id="4" name="searchByRating" {% if searchByRating == 4 %}checked{% endif %}>
+		  <label class="form-check-label" for="4">
+		  	<span class="fas fa-star wt-star"></span>
+		  	<span class="fas fa-star wt-star"></span>
+		  	<span class="fas fa-star wt-star"></span>
+		  	<span class="fas fa-star wt-star"></span>
+		  	<span class="far fa-star wt-star"></span>
+		    & Up
+		  </label>
+		</div>
+		<div class="form-check">
+		  <input class="form-check-input" type="radio" value="3" id="3" name="searchByRating" {% if searchByRating == 3 %}checked{% endif %}>
+		  <label class="form-check-label" for="3">
+		  	<span class="fas fa-star wt-star"></span>
+		  	<span class="fas fa-star wt-star"></span>
+		  	<span class="fas fa-star wt-star"></span>
+		  	<span class="far fa-star wt-star"></span>
+		  	<span class="far fa-star wt-star"></span>
+		    & Up
+		  </label>
+		</div>
+		<div class="form-check">
+		  <input class="form-check-input" type="radio" value="2" id="2" name="searchByRating" {% if searchByRating == 2 %}checked{% endif %}>
+		  <label class="form-check-label" for="2">
+		  	<span class="fas fa-star wt-star"></span>
+		  	<span class="fas fa-star wt-star"></span>
+		  	<span class="far fa-star wt-star"></span>
+		  	<span class="far fa-star wt-star"></span>
+		  	<span class="far fa-star wt-star"></span>
+		    & Up
+		  </label>
+		</div>
+		<div class="form-check">
+		  <input class="form-check-input" type="radio" value="1" id="1" name="searchByRating" {% if searchByRating == 1 %}checked{% endif %}>
+		  <label class="form-check-label" for="1">
+		  	<span class="fas fa-star wt-star"></span>
+		  	<span class="far fa-star wt-star"></span>
+		  	<span class="far fa-star wt-star"></span>
+		  	<span class="far fa-star wt-star"></span>
+		  	<span class="far fa-star wt-star"></span>
+		    & Up
+		  </label>
+		</div>
+		<hr>
+		<button type="submit" class="btn btn-primary">Filter</button>
+		<a class="mx-2" href="{% url 'places:all' %}"><i class="fa fa-undo"></i></a>
+	</div>
+
+	<!-- center display section -->
+	<div class="col-md-9">
+		<div class="row mb-md-5 mt-2 mt-sm-0">
+			<div class="form-inline col-md-12" style="justify-content: center">
+				<input class="form-control mr-2" style="width: 70%; display:inline-block;" type="text" placeholder="Search for places to see here" name="search"
+				{% if search %} value="{{ search }}" {% endif %}>
+				<button class="btn btn-warning my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
+				<a class="mx-2" href="{% url 'places:all' %}"><i class="fa fa-undo"></i></a>
+			</div>
+		</div>
+		<hr>
+		<div class="row px-3">
+		{% if place_list %}
+			{% for place in place_list %}
+			<!-- one section -->
+			<div class="w-100 p-3 border-bottom border-gray">
+				<div class="row">
+					<div class="col-6 col-md-4">
+						<a href="{% url 'places:place_detail' place.slug %}">
+						{% if place.featured_image %}
+						<img class="img-fluid img-thumbnail" src="{{ place.featured_image.url }}">
+						{% else %}
+						<img class="img-fluid img-thumbnail" src="{% static 'sample.jpg' %}">
+						{% endif %}
+						</a>
+					</div>
+					<div class="col-6 col-md-8">
+						<a class="wt-name-link"  href="{% url 'places:place_detail' place.slug %}">
+						<h3 class="wt-name d-inline">{{ place.title }}</h3><br>
+						</a>
+						<a class="wt-mainblock" href="{% url 'places:place_detail' place.slug %}">
+						<span class="wt-location d-inline">{{ place.region }}</span><br>
+						<span class="wt-type d-inline">{{ place.category }}</span><br>
+						</a>
+						<div class="place-rating">
+							{% if place.averagereview <= 0  %}
+							<span class="far fa-star wt-star"></span>
+							{% elif place.averagereview <= 0.5  %}
+							<span class="fas fa-star-half-alt wt-star"></span>
+							{% else %}
+							<span class="fas fa-star wt-star"></span>
+							{% endif %}
+
+							{% if place.averagereview <= 1  %}
+							<span class="far fa-star wt-star"></span>
+							{% elif place.averagereview <= 1.5  %}
+							<span class="fas fa-star-half-alt wt-star"></span>
+							{% else %}
+							<span class="fas fa-star wt-star"></span>
+							{% endif %}
+
+							{% if place.averagereview <= 2  %}
+							<span class="far fa-star wt-star"></span>
+							{% elif place.averagereview <= 2.5  %}
+							<span class="fas fa-star-half-alt wt-star"></span>
+							{% else %}
+							<span class="fas fa-star wt-star"></span>
+							{% endif %}
+
+							{% if place.averagereview <= 3  %}
+							<span class="far fa-star wt-star"></span>
+							{% elif place.averagereview <= 3.5  %}
+							<span class="fas fa-star-half-alt wt-star"></span>
+							{% else %}
+							<span class="fas fa-star wt-star"></span>
+							{% endif %}
+
+							{% if place.averagereview <= 4  %}
+							<span class="far fa-star wt-star"></span>
+							{% elif place.averagereview <= 4.5  %}
+							<span class="fas fa-star-half-alt wt-star"></span>
+							{% else %}
+							<span class="fas fa-star wt-star"></span>
+							{% endif %}
+							<a class="wt-review-link" href="{% url 'places:place_detail' place.slug %}#reviews">
+							({{ place.countreview }})
+							</a>
+						</div>
+					</div>				
+				</div>
+			</div>
+			{% endfor %}
+
+			{% if place_list.has_other_pages %}
+			  <ul class="pagination mx-auto mt-3">
+			    {% if place_list.has_previous %}
+			      <li class="page-item"><a class="page-link" href="?page={{ place_list.previous_page_number }}{% if parameters %}&{{ parameters }}{% endif %}">&laquo;</a></li>
+			    {% else %}
+			      <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+			    {% endif %}
+			    {% for i in place_list.paginator.page_range %}
+			      {% if place_list.number == i %}
+			        <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+			      {% else %}
+			        <li class="page-item"><a class="page-link" href="?page={{ i }}{% if parameters %}&{{ parameters }}{% endif %}">{{ i }}</a></li>
+			      {% endif %}
+			    {% endfor %}
+			    {% if place_list.has_next %}
+			      <li class="page-item"><a class="page-link" href="?page={{ place_list.next_page_number }}{% if parameters %}&{{ parameters }}{% endif %}">&raquo;</a></li>
+			    {% else %}
+			      <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+			    {% endif %}
+			  </ul>
+			{% endif %}
+		{% endif %}
+		</div>
+	</div>
+</div>
+</form>
+{% endblock %}

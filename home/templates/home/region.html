@@ -1,0 +1,27 @@
+{% extends 'base_menu.html' %}
+
+{% block title %}
+Regions - {{settings.APP_NAME}}
+{% endblock %}
+
+{% load static %}
+
+{% block header %}
+ <header class="wt-header">
+    <h1 class="display-1" id="h1-title">Regions</h1>
+  </header>
+{% endblock %}
+
+{% block content %}
+    <div id="home-tiles" class="row">
+      {% for region in region_list %}
+      <div class="col-md-4 col-sm-6 col-xs-6">
+        <a href="{% url 'places:all' %}?searchByRegion={{ region.name }}">
+          <div id="menu-tile" style="background: url({{ region.image.url }}) no-repeat; background-position: center;">
+            <span>{{ region.name }}</span>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+{% endblock %}
