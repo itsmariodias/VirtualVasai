@@ -16,6 +16,7 @@ django-crispy-forms
 social-auth-app-django
 social-auth-core
 django-extensions
+Pillow
 ```
 
 ### About:
