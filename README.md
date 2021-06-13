@@ -23,3 +23,7 @@ Pillow
 This is a simple website designed and implemented using Django 3 along with Bootstrap in MySQL. It is a tourist based site where users can see and review places based in and around Vasai. Admin users can add and manage the users and add new places using Django's default admin page. Users can register and login as they wish to review sites and rate them. Based on the rating the top 3 places are displayed on the Homepage as well. There is a filter and search feature to quickly find relevant places.
 
 ###### Disclaimer: All api keys and media files have been removed for privacy reasons. 
+
+#### Screenshots:
+
+![Home-page](/Screenshots/Home page.png?raw=true)
