@@ -24,6 +24,6 @@ This is a simple website designed and implemented using Django 3 along with Boot
 
 ###### Disclaimer: All api keys and media files have been removed for privacy reasons. 
 
-#### Screenshots:
+### Screenshots:
 
-![Home-page](Screenshots/Home%20page.jpg?raw=true)
+![Home-page](Screenshots/Homepage.jpg?raw=true)
